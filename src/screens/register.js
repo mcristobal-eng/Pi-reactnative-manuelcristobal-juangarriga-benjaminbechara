@@ -8,6 +8,7 @@ function Register({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [ register, setRegister] = useState(false);
+    const [registerError, setRegisterError] = useState('');
        
 
      const onSubmit = () => {
@@ -25,7 +26,7 @@ function Register({ navigation }) {
                 navigation.navigate('Login');
             })
             .catch(error => {
-                Alert.alert('Error', error.message);
+                setRegisterError('Fallo en el registro.')
             });
 
 
