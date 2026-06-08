@@ -1,38 +1,39 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
-import { db, auth } from "../components/firebase/config";
+import { db, auth } from "../firebase/config";
 
 function Register({ navigation }) {
+
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [ register, setRegister] = useState(false);
+    const [register, setRegister] = useState(false);
     const [registerError, setRegisterError] = useState('');
-       
 
-     const onSubmit = () => {
+
+    const onSubmit = () => {
         auth.createUserWithEmailAndPassword(email, password)
             .then(response => {
-                setRegister (true);
+                setRegister(true);
 
                 db.collection('users').add({
-                    email: email, 
+                    email: email,
                     nombreUsuario: username,
                     createdAt: Date.now(),
 
                 })
-               
-                navigation.navigate('Login');
+                
+
             })
             .catch(error => {
                 setRegisterError('Fallo en el registro.')
             });
 
 
-        
+
     };
-    
+
 
     return (
         <View style={styles.container}>
@@ -46,7 +47,7 @@ function Register({ navigation }) {
                 value={email}
             />
 
-            
+
             <TextInput
                 style={styles.input}
                 placeholder='nombre de usuario'
