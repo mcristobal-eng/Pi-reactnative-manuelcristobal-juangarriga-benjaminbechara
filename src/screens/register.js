@@ -23,10 +23,16 @@ function Register({ navigation }) {
                     createdAt: Date.now(),
 
                 })
-                
+
 
             })
             .catch(error => {
+
+                if (error.code === 'auth/email-already-in-use') {
+                    setRegisterError('Este email ya está registrado.');
+                } else {
+                    setRegisterError('Falló el registro. Intentá de nuevo.');
+                }
                 setRegisterError('Fallo en el registro.')
             });
 

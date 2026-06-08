@@ -19,7 +19,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Register">
         {user ? (
           <Stack.Screen name="Home" component={Home} />
         ) : (
