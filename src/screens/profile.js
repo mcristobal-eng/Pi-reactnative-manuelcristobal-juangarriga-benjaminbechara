@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: '#f2f2f2'
-    },
+    }, // Acepta cambios, puse cualquier cosa y despues veia que onda
     email: {
         fontSize: 14,
         color: 'gray',
