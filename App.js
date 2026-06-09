@@ -7,6 +7,8 @@ import { auth } from "./src/firebase/config";
 import Register from "./src/screens/register";
 import Login from "./src/screens/login";
 import Home from "./src/screens/home";
+import MiPerfil from "./src/screens/profile";
+
 
 const Stack = createNativeStackNavigator();
 

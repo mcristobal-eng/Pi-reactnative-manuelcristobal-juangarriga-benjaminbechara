@@ -1,72 +1,96 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { db, auth } from '../../firebase/config';
 
-class MiPerfil extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            misPosteos: [],
-            loading: true
-        };
+function MiPerfil(props) {
+    const [misPosteos, setMisPosteos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    let email = '';
+    if (auth.currentUser) {
+        email = auth.currentUser.email;
     }
 
-    componentDidMount() {
-        db.collection('posts')
+    useEffect(() => {
+        db.collection('posteos')
             .where('owner', '==', auth.currentUser.email)
             .onSnapshot(docs => {
-                let posteos = [];
+                let posts = [];
 
                 docs.forEach(doc => {
-                    posteos.push({
+                    posts.push({
                         id: doc.id,
                         data: doc.data()
                     });
                 });
 
-                this.setState({
-                    misPosteos: posteos,
-                    loading: false
-                });
+                setMisPosteos(posts);
+                setLoading(false);
             });
-    }
+    }, []);
 
-    handleLogout() {
+    const manejoLogout = () => {
         auth.signOut()
-            .then(() => this.props.navigation.navigate('Login'))
+            .then(() => props.navigation.navigate('Login'))
             .catch(error => console.log(error));
-    }
+    };
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>Mi Perfil</Text>
+    return (
+        <View style={styles.container}>
+            <Text style={styles.email}>Mi Perfil</Text>
 
-                <Text>Email: {auth.currentUser.email}</Text>
+            <Text>Email: {email}</Text>
 
-                <Pressable
-                    style={styles.logoutBtn}
-                    onPress={() => this.handleLogout()}
-                >
-                    <Text>Cerrar Sesión</Text>
-                </Pressable>
+            <Pressable
+                style={styles.logoutBtn}
+                onPress={manejoLogout}
+            >
+                <Text style={styles.textoBtn}>Cerrar Sesión</Text>
+            </Pressable>
 
-                {this.state.loading ? (
-                    <ActivityIndicator size="large" color="blue" />
-                ) : (
-                    <FlatList
-                        data={this.state.misPosteos}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) => (
-                            <View style={styles.postCard}>
-                                <Text>{item.data.description}</Text>
-                            </View>
-                        )}
-                    />
-                )}
-            </View>
-        );
-    }
+            {loading ? (
+                <ActivityIndicator size="large" color="blue" />
+            ) : (
+                <FlatList
+                    data={misPosteos}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item }) => (
+                        <View style={styles.postCard}>
+                            <Text>{item.data.description}</Text>
+                        </View>
+                    )}
+                />
+            )}
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: '#f2f2f2'
+    },
+    email: {
+        fontSize: 14,
+        color: 'gray',
+        marginBottom: 10
+    },
+    logoutBtn: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 4,
+        marginTop: 10
+    },
+    textoBtn: {
+        color: 'white',
+        fontWeight: 'bold'
+    },
+    postCard: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        marginBottom: 10
+    }
+});
 
 export default MiPerfil;
