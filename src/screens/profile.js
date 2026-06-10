@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
-import { db, auth } from '../../firebase/config';
+import { db, auth } from '../firebase/config';
 
 function MiPerfil(props) {
     const [misPosteos, setMisPosteos] = useState([]);
@@ -11,8 +11,8 @@ function MiPerfil(props) {
     }
 
     useEffect(() => {
-        db.collection('posteos')
-            .where('owner', '==', auth.currentUser.email)
+        db.collection('posts')
+            .where('email', '==', auth.currentUser.email)
             .onSnapshot(docs => {
                 let posts = [];
 
@@ -22,7 +22,6 @@ function MiPerfil(props) {
                         data: doc.data()
                     });
                 });
-
                 setMisPosteos(posts);
                 setLoading(false);
             });
@@ -30,7 +29,6 @@ function MiPerfil(props) {
 
     const manejoLogout = () => {
         auth.signOut()
-            .then(() => props.navigation.navigate('Login'))
             .catch(error => console.log(error));
     };
 

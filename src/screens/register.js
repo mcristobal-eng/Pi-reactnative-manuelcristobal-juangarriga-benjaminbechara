@@ -33,7 +33,6 @@ function Register({ navigation }) {
                 } else {
                     setRegisterError('Falló el registro. Intentá de nuevo.');
                 }
-                setRegisterError('Fallo en el registro.')
             });
 
 
@@ -68,6 +67,7 @@ function Register({ navigation }) {
                 onChangeText={text => setPassword(text)}
                 value={password}
             />
+            {registerError ? <Text style={styles.error}>{registerError}</Text> : null}
 
             <Pressable style={styles.button} onPress={() => onSubmit()}>
                 <Text style={styles.buttonText}>Registrate</Text>

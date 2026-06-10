@@ -55,11 +55,6 @@ function Login({ navigation }) {
             <Pressable onPress={() => navigation.navigate('Register')}>
                 <Text>¿No tenés cuenta? Registrate</Text>
             </Pressable>
-
-            <View>
-                <Text>Email: {email}</Text>
-                <Text>Contraseña: {password}</Text>
-            </View>
         </View>
     );
 }
