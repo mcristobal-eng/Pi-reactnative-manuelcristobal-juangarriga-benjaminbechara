@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { db, auth } from '../firebase/config';
 
-function MiPerfil(props) {
+function MiPerfil() {
     const [misPosteos, setMisPosteos] = useState([]);
     const [loading, setLoading] = useState(true);
     let email = '';
@@ -11,37 +11,38 @@ function MiPerfil(props) {
     }
 
     useEffect(() => {
-        db.collection('posts')
+        const nosuscripto = db.collection('posts')
             .where('email', '==', auth.currentUser.email)
-            .onSnapshot(docs => {
-                let posts = [];
-
-                docs.forEach(doc => {
-                    posts.push({
-                        id: doc.id,
-                        data: doc.data()
+            .onSnapshot(
+                docs => {
+                    let posts = [];
+                    docs.forEach(doc => {
+                        posts.push({ 
+                            id: doc.id, 
+                            data: doc.data() });
                     });
-                });
-                setMisPosteos(posts);
-                setLoading(false);
-            });
+                    setMisPosteos(posts);
+                    setLoading(false);
+                },
+                error => {
+                    console.log(error);
+                    setLoading(false);
+                }
+            );
+
+        return () => nosuscripto();
     }, []);
 
     const manejoLogout = () => {
-        auth.signOut()
-            .catch(error => console.log(error));
+        auth.signOut().catch(error => console.log(error));
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.email}>Mi Perfil</Text>
-
+            <Text style={styles.titulo}>Mi Perfil</Text>
             <Text>Email: {email}</Text>
 
-            <Pressable
-                style={styles.logoutBtn}
-                onPress={manejoLogout}
-            >
+            <Pressable style={styles.logoutBtn} onPress={manejoLogout}>
                 <Text style={styles.textoBtn}>Cerrar Sesión</Text>
             </Pressable>
 
@@ -50,10 +51,10 @@ function MiPerfil(props) {
             ) : (
                 <FlatList
                     data={misPosteos}
-                    keyExtractor={item => item.id.toString()}
+                    keyExtractor={item => item.id}
                     renderItem={({ item }) => (
                         <View style={styles.postCard}>
-                            <Text>{item.data.description}</Text>
+                            <Text>{item.data.descriptionPost}</Text>
                         </View>
                     )}
                 />
@@ -63,32 +64,11 @@ function MiPerfil(props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: '#f2f2f2'
-    }, // Acepta cambios, puse cualquier cosa y despues veia que onda
-    email: {
-        fontSize: 14,
-        color: 'gray',
-        marginBottom: 10
-    },
-    logoutBtn: {
-        backgroundColor: 'red',
-        padding: 10,
-        borderRadius: 4,
-        marginTop: 10
-    },
-    textoBtn: {
-        color: 'white',
-        fontWeight: 'bold'
-    },
-    postCard: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        marginBottom: 10
-    }
+    container: { flex: 1, padding: 10, backgroundColor: '#f2f2f2' },
+    titulo: { fontSize: 20, fontWeight: 'bold', marginBottom: 5 },
+    logoutBtn: { backgroundColor: 'red', padding: 10, borderRadius: 4, marginTop: 10 },
+    textoBtn: { color: 'white', fontWeight: 'bold' },
+    postCard: { padding: 10, borderWidth: 1, borderColor: '#ccc', marginBottom: 10 }
 });
 
 export default MiPerfil;

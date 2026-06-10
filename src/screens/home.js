@@ -1,11 +1,37 @@
-import React from "react";
-import { View, Text, Pressable } from "react-native";
-import { auth } from "../firebase/config";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable, FlatList,StyleSheet} from "react-native";
+import {db, auth } from "../firebase/config";
+import Post from '../components/postcard';
 
 function Home() {
+    const [posteos, setPosteos] = useState([])
+    useEffect(() => {
+        const unfollow =db.collection('posts')
+        .orderBy('createdAt', 'desc')
+        .onSnapshot(
+            docs =>{
+                let postsCargados = [];
+                docs.forEach(doc =>{
+                    postsCargados.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                })
+                setPosteos(postsCargados);
+            },
+            
+        ); 
+        
+    })
     return (
-        <View>
-            <Text>Home</Text>
+        <View style = {styles.container}>
+
+            <Text style = {styles.title}>Home</Text>
+            <FlatList>
+                data ={posteos}
+                keyExtractor ={item => item.id}
+                renderItem={({ item }) => <Post data={item} />}
+            </FlatList>
 
 
             <Pressable onPress={() => auth.signOut()}>
@@ -14,6 +40,10 @@ function Home() {
         </View>
     );
 }
+const styles = StyleSheet.create({
+    container: { flex: 1, padding: 10 },
+    title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 }
+});
 
 export default Home;
 
