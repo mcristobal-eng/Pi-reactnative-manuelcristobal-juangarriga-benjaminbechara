@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome} from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { auth } from "./src/firebase/config";
@@ -24,14 +24,14 @@ function TabNavigator() {
 
     <Tab.Navigator>
       <Tab.Screen name="Home" component={Home} options={
-        {tabBarIcon: () => <FontAwesome name = 'home' size = {20} color ='black'/>}
+        { tabBarIcon: () => <FontAwesome name='home' size={20} color='black' /> }
       } />
       <Tab.Screen name="NewPost" component={NewPost}
-      options={
-        {tabBarIcon: () => <MaterialIcons name = 'post-add' size = {20} color ='black'/>}
-      } />
+        options={
+          { tabBarIcon: () => <MaterialIcons name='post-add' size={20} color='black' /> }
+        } />
       <Tab.Screen name="MiPerfil" component={MiPerfil} options={
-        {tabBarIcon: () => <Ionicons name = 'person-circle' size = {20} color ='black'/>}
+        { tabBarIcon: () => <Ionicons name='person-circle' size={20} color='black' /> }
       } />
     </Tab.Navigator>
   );
@@ -39,14 +39,14 @@ function TabNavigator() {
 
 function App() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] =useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setUser(user);
-      setLoading(false); 
+      setLoading(false);
     });
-    return () => unsubscribe(); 
+    return () => unsubscribe();
   }, []);
 
   if (loading) return <ActivityIndicator size="large" color="blue" style={{ flex: 1 }} />;

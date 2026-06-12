@@ -46,7 +46,7 @@ function Login({ navigation }) {
                 value={password}
             />
 
-            {error ? <Text style={{ color: 'red' }}>{error}</Text> : null} //muestra si el email está mal escrito. 
+            {error ? <Text style={{ color: 'red' }}>{error}</Text> : null} 
 
             <Pressable style={styles.button} onPress={onSubmit}>
                 <Text style={styles.buttonText}>Login</Text>
