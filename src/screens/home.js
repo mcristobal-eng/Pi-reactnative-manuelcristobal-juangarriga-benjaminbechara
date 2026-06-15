@@ -3,7 +3,7 @@ import { View, Text, Pressable, FlatList, StyleSheet } from "react-native";
 import { db, auth } from "../firebase/config";
 import Post from '../components/postcard';
 
-function Home() {
+function Home(props) {
     const [posteos, setPosteos] = useState([])
     useEffect(() => {
         const unfollow = db.collection('posts')
@@ -30,7 +30,8 @@ function Home() {
             <FlatList
                 data={posteos}
                 keyExtractor={item => item.id}
-                renderItem={({ item }) => <Post data={item} />}
+                renderItem={({ item }) => <Post data={item} navigation={props.navigation} />}
+
             />
 
 

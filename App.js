@@ -13,6 +13,7 @@ import Login from "./src/screens/login";
 import Home from "./src/screens/home";
 import MiPerfil from "./src/screens/profile";
 import NewPost from "./src/screens/newposts";
+import Comentarios from "./src/screens/comments";
 
 
 
@@ -55,8 +56,10 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator >
         {user ? (
-          <Stack.Screen name="Principal" component={TabNavigator} options={{ headerShown: false }} />
-
+          <>
+            <Stack.Screen name="Principal" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="Comentarios" component={Comentarios} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />
