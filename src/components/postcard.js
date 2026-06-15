@@ -35,7 +35,7 @@ function Post(props) {
                 </Text>
             </Pressable>
             <Pressable onPress={() => props.navigation.navigate('Comentarios', { postId: id })}>
-                <Text>💬 Comentar</Text>
+                <Text style={styles.comentar}>💬 Comentar</Text>
             </Pressable>
 
         </View>
@@ -44,5 +44,10 @@ function Post(props) {
 export default Post;
 
 const styles = StyleSheet.create({
-    card: { padding: 15, marginBottom: 20 }
+    card: { padding: 15, marginBottom: 10, backgroundColor: 'white', borderRadius: 8, borderWidth: 1, borderColor: '#ddd' },
+    user: { fontWeight: 'bold', color: '#FF6B35', marginBottom: 5 },
+    desc: { fontSize: 14, marginBottom: 10, color: '#333' },
+    like: { color: 'gray', marginBottom: 5 },
+    likeActivo: { color: '#FF6B35', marginBottom: 5 },
+    comentar: { color: '#555' }
 })
