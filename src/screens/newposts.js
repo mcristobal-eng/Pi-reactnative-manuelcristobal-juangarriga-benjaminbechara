@@ -5,20 +5,20 @@ import { db, auth } from '../firebase/config';
 function NewPost(props) {
     const [description, setDescription] = useState('');
     function manejoPost() {
-        db.collection('posts').add({
-            email: auth.currentUser.email,
-            descriptionPost: description,
-            createdAt: Date.now(),
-            likes: []
-        })
-            .then(() => {
-                setDescription('');
-                props.navigation.navigate('Home')
-            }
-
-
-
-            )
+        if (description.length > 0) {
+            db.collection('posts').add({
+                email: auth.currentUser.email,
+                descriptionPost: description,
+                createdAt: Date.now(),
+                likes: []
+            })
+                .then(() => {
+                    setDescription('');
+                    props.navigation.navigate('Home')
+                })
+        } else {
+            alert("El post debe contar con al menos un caracter")
+        }
     }
 
     return (
@@ -30,8 +30,8 @@ function NewPost(props) {
                 onChangeText={text => setDescription(text)}
                 value={description}
             />
-            <Pressable style = {styles.btn} onPress={manejoPost}>
-                <Text style = {styles.txtBtn}>Postear</Text>
+            <Pressable style={styles.btn} onPress={manejoPost}>
+                <Text style={styles.txtBtn}>Postear</Text>
             </Pressable>
 
         </View>

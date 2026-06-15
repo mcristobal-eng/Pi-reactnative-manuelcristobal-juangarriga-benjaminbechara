@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Pressable, TextInput, StyleSheet, Image } from 'react-native';
 import { auth } from "../firebase/config";
 
 
@@ -28,7 +28,11 @@ function Login({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text>Login</Text>
+            <Image
+                source={require('../../assets/logo_plato.png')}
+                style={styles.logo}
+            />
+            <Text style={styles.slogan}>Compartí lo que cocinás</Text>
 
             <TextInput
                 style={styles.input}
@@ -56,6 +60,8 @@ function Login({ navigation }) {
                 <Text>¿No tenés cuenta? Registrate</Text>
             </Pressable>
         </View>
+        
+        
     );
 }
 
@@ -63,30 +69,47 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 10,
         marginTop: 20,
+        alignItems: 'center',
+    },
+    logo: {
+        width: 120,
+        height: 120,
+        marginBottom: 8,
+    },
+    slogan: {
+        color: '#888',
+        fontSize: 13,
+        marginBottom: 20,
     },
     input: {
+        width: '100%',
         height: 20,
         paddingVertical: 15,
         paddingHorizontal: 10,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#FF6B35',
         borderStyle: 'solid',
         borderRadius: 6,
         marginVertical: 10,
     },
     button: {
-        backgroundColor: '#28a745',
+        width: '100%',
+        backgroundColor: '#FF6B35',
         paddingHorizontal: 10,
         paddingVertical: 6,
         alignItems: 'center',
         borderRadius: 4,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: '#28a745',
+        borderColor: '#FF6B35',
+        marginTop: 10,
     },
     buttonText: {
         color: '#fff',
     },
+    link: {
+        marginTop: 14,
+        color: '#FF6B35',
+        fontSize: 13,
+    },
 });
-
-export default Login;
