@@ -113,3 +113,5 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
 });
+
+export default Login
