@@ -26,7 +26,9 @@ function Home(props) {
     return (
         <View style={styles.container}>
 
-            <Text style={styles.title}>Home</Text>
+            <View style={styles.header}>
+            <Text style={styles.headerText}>Home</Text>
+            </View>
             <FlatList
                 data={posteos}
                 keyExtractor={item => item.id}
@@ -35,15 +37,19 @@ function Home(props) {
             />
 
 
-            <Pressable onPress={() => auth.signOut()}>
-                <Text>Logout</Text>
+            <Pressable style={styles.logoutBtn} onPress={() => auth.signOut()}>
+                <Text style={styles.logoutText}>Logout</Text>
             </Pressable>
         </View>
     );
 }
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 10 },
-    title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 }
+    title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
+    header: { backgroundColor: '#FF6B35', padding: 15, alignItems: 'center' },
+    headerText: { color: 'white', fontSize: 22, fontWeight: 'bold' },
+    logoutBtn: { backgroundColor: 'red', padding: 10, borderRadius: 4, margin: 10 },
+    logoutText: { color: 'white', fontWeight: 'bold', textAlign: 'center' }
 });
 
 export default Home;
