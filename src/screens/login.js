@@ -17,7 +17,7 @@ function Login({ navigation }) {
         auth.signInWithEmailAndPassword(email, password)
             .then(response => {
                 setError('');
-                
+
             })
             .catch(error => {
                 setError('Credenciales incorrectas');
@@ -50,7 +50,7 @@ function Login({ navigation }) {
                 value={password}
             />
 
-            {error ? <Text style={{ color: 'red' }}>{error}</Text> : null} 
+            {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
 
             <Pressable style={styles.button} onPress={onSubmit}>
                 <Text style={styles.buttonText}>Login</Text>
@@ -60,8 +60,8 @@ function Login({ navigation }) {
                 <Text>¿No tenés cuenta? Registrate</Text>
             </Pressable>
         </View>
-        
-        
+
+
     );
 }
 
@@ -113,3 +113,5 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
 });
+
+export default Login;

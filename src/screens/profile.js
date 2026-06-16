@@ -17,9 +17,10 @@ function MiPerfil() {
                 docs => {
                     let posts = [];
                     docs.forEach(doc => {
-                        posts.push({ 
-                            id: doc.id, 
-                            data: doc.data() });
+                        posts.push({
+                            id: doc.id,
+                            data: doc.data()
+                        });
                     });
                     setMisPosteos(posts);
                     setLoading(false);

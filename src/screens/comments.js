@@ -15,14 +15,14 @@ function Comentarios(props) {
             .onSnapshot(docs => {
                 let lista = [];
                 docs.forEach(doc => {
-                    lista.push({ 
-                        id: doc.id, 
-                        data: doc.data() 
+                    lista.push({
+                        id: doc.id,
+                        data: doc.data()
                     });
                 });
                 setComentarios(lista);
             });
-        
+
         return () => unsub();
     }, []);
 
@@ -37,7 +37,7 @@ function Comentarios(props) {
             .add({
                 email: auth.currentUser.email,
                 texto: comentario,
-                createdAt: Date.now(), 
+                createdAt: Date.now(),
             })
             .then(() => {
                 setComentario('');
@@ -60,7 +60,7 @@ function Comentarios(props) {
             <TextInput
                 style={styles.input}
                 placeholder="Escribí un comentario..."
-                value={comentario} 
+                value={comentario}
                 onChangeText={text => setComentario(text)}
             />
             <Pressable style={styles.btn} onPress={() => enviarComentario()}>
